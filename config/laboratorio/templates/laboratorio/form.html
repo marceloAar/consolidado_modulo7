@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-6 col-lg-4">
+        <h3>{% if form.instance.id %}Actualizar{% else %}Ingresar los datos del{% endif %} Laboratorio</h1>
+        <form method="post" class="p-4 border rounded shadow">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar</button>
+        </form><br><br>
+    </div>
+</div>
+    
+<p>¿Informacion de los Laboratorios?</p>
+<a href="{% url 'laboratorio:laboratorio_list' %}">Ir a información de Laboratorios</a><br><br>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+(entorno) C:\Users\Home\Desktop\practica_final_orm_django\config>python manage.py shell
+Python 3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from laboratorio.models import Laboratorio, DirectorGeneral, Producto
+>>> laboratorios = Laboratorio.objects.all()
+>>> print(laboratorios)
+<QuerySet [<Laboratorio: Laboratorio XYZ>, <Laboratorio: Laboratorio 1>, <Laboratorio: Laboratorio 2>, <Laboratorio: Laboratorio 3>]>
+>>> directores = DirectorGeneral.objects.all()
+>>> print(directores)   
+<QuerySet [<DirectorGeneral: Juan Pérez (Laboratorio XYZ)>, <DirectorGeneral: Director General 1 (Laboratorio 1)>, <DirectorGeneral: Director General 2 (Laboratorio 2)>, <DirectorGeneral: Director General 3 (Laboratorio 3)>]>
+>>> productos = Producto.objects.all()
+>>> print(productos)  
+<QuerySet [<Producto: Producto A>, <Producto: Producto 1>, <Producto: Producto 2>, <Producto: Producto 3>]>
+>>> producto = Producto.objects.get(nombre='Producto 1')  # Busca el producto
+>>> laboratorio = producto.laboratorio  # Accede al laboratorio relacionado
+>>> print(laboratorio)
+Laboratorio 1
+>>> productos_ordenados = Producto.objects.all().order_by('nombre')  # Ordenar por nombre
+>>> for producto in productos_ordenados:
+...     print(f"Nombre: {producto.nombre}, Laboratorio: {producto.laboratorio.nombre}")
+... 
+Nombre: Producto 1, Laboratorio: Laboratorio 1
+Nombre: Producto 2, Laboratorio: Laboratorio 2
+Nombre: Producto 3, Laboratorio: Laboratorio 3
+Nombre: Producto A, Laboratorio: Laboratorio XYZ
+>>> laboratorios_productos = Producto.objects.values_list('laboratorio__nombre', flat=True).distinct()
+>>> for laboratorio in laboratorios_productos:
+...     print(f"Laboratorio: {laboratorio}")
+... 
+Laboratorio: Laboratorio XYZ
+Laboratorio: Laboratorio 3
+Laboratorio: Laboratorio 2
+Laboratorio: Laboratorio 1
+>>>
